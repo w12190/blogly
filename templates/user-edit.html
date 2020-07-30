@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
 
-{% block title %} TODO add title {% endblock %}
+{% block title %} Edit User {% endblock %}
 
 {% block content %}
+<h1>Edit a user</h1>
+<form>
+    <label for="fname">First Name</label><br>
+    <input type="text" id='fname' name='first_name'><br><br>
 
+    <label for="lname">Last Name</label><br>
+    <input type="text" id="lname" name="last_name"><br><br>
+
+    <label for="imgURL">Image URL</label><br>
+    <input type="text" id="imgURL" name="image_url"><br><br>
+
+    <button formaction="/users" class="btn btn-outline-info">Cancel</button>
+    <button formaction="/users/{{user_in_template.id}}/edit" formmethod="POST" class="btn btn-success">Save</button>
+</form>
 {% endblock %}

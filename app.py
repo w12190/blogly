@@ -41,22 +41,37 @@ def process_new_user_form():
 
     return redirect('/users')
 
-# @app.route('/users/<user_id>')
-# def show_user_info(user_id):
-#     """Displays info for a given user."""
-#     return render_template('user-detail.html')
+@app.route('/users/<user_id>')
+def show_user_info(user_id):
+    """Displays info for a given user."""
+    user = User.query.get(user_id)
+    return render_template('user-detail.html', user_in_template = user)
 
-# @app.route('/users/<user_id>/edit')
-# def show_user_edit_page(user_id):
-#     """Displays the user edit page."""
-#     return render_template('user-edit.html')
+@app.route('/users/<user_id>/edit')
+def show_user_edit_page(user_id):
+    """Displays the user edit page."""
+    user = User.query.get(user_id)
+    return render_template('user-edit.html', user_in_template = user)
 
-# @app.route('/users/<user_id>/edit', methods=['POST'])
-# def process_user_edit_form(user_id):
-#     """ Process the user info edit form, redirects to /users."""
-#     return redirect('/users')
+@app.route('/users/<user_id>/edit', methods=['POST'])
+def process_user_edit_form(user_id):
+    """ Process the user info edit form, redirects to /users."""
+    user = User.query.get(user_id)
 
-# @app.route('/users/<user-id>/delete', methods=['POST'])
-# def delete_user():
-#     """Delete the given user, redirects to /users."""
-#     return redirect('/users')
+    if request.form['first_name'] != '':
+        user.first_name = request.form['first_name']
+    if request.form['last_name'] != '':
+        user.last_name = request.form['last_name']
+    if request.form['image_url'] != '':
+        user.image_url = request.form['image_url']
+    db.session.add(user)
+    db.session.commit()
+    return redirect('/users')
+
+@app.route('/users/<user_id>/delete', methods=['POST'])
+def delete_user(user_id):
+    """Delete the given user, redirects to /users."""
+    user = User.query.get(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    return redirect('/users')
