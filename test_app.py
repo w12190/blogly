@@ -28,6 +28,7 @@ class BloglyAppTestCase(TestCase):
         user = User(first_name='Wayne', last_name='Chen')
         db.session.add(user)
         db.session.commit()
+        self.client = app.test_client()
 
         self.user_id = user.id
 
@@ -38,8 +39,8 @@ class BloglyAppTestCase(TestCase):
     
     def test_root_route(self):
         '''Tests that the root route redirects to /user'''
-        with self.test_client() as client:
-            response = client.get('/')
+        with self.client as client:
+            response = client.get('/', follow_redirects=True)
             html = response.get_data(as_text=True)
 
             self.assertEqual(response.status_code, 200)
@@ -47,7 +48,7 @@ class BloglyAppTestCase(TestCase):
 
     def test_new_user_form_displays(self):
         '''Tests that the new user form displays on the route /users/new'''
-        with self.test_client() as client:
+        with self.client as client:
             response = client.get('/users/new')
             html = response.get_data(as_text=True)
 
@@ -57,7 +58,7 @@ class BloglyAppTestCase(TestCase):
     
     def test_new_user_submission(self):
         '''Tests that the new user form submission redirects to the users page. The new user should be on the list of users'''
-        with self.test_client() as client:
+        with self.client as client:
             response = client.post('/users/new', data={'first_name': 'Michelle', 'last_name': 'Obama', 'image_url': 'a;lsdkjfl;aksdfj'}, follow_redirects=True)
             html = response.get_data(as_text=True)
 

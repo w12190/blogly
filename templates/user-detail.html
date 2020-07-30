@@ -4,14 +4,24 @@
 
 {% block content %}
 
-<!-- Display User Info -->
-<img src="{{ user_in_template.image_url }}" alt="user's image" width="200" height="auto">
-<h1>{{ user_in_template.first_name}} {{ user_in_template.last_name }}</h1>
+    <!-- Display User Info -->
+    <img src="{{ user_in_template.image_url }}" alt="user's image" width="200" height="auto">
+    <h1>{{ user_in_template.first_name}} {{ user_in_template.last_name }}</h1>
 
 
-<!-- Edit and Delete User Buttons -->
-<form action="/users/{{user_in_template.id}}/delete" method="POST" style="display: inline-block;">
-    <button formaction="/users/{{user_in_template.id}}/edit" formmethod="GET" class="btn btn-primary">Edit</button>
-    <button class="btn btn-danger">Delete</button>
-</form>
+    <!-- Edit and Delete User Buttons -->
+    <form action="/users/{{user_in_template.id}}/delete" method="POST" style="display: inline-block;">
+        <button formaction="/users/{{user_in_template.id}}/edit" formmethod="GET" class="btn btn-primary">Edit</button>
+        <button class="btn btn-danger">Delete</button>
+    </form>
+    <br><br>
+    <h3>Posts</h3>
+    <ul>
+        {% for post in posts_in_template %} 
+            <a href="/posts/{{ post.id }}"><li>{{ post.title }}</li></a>
+        {% endfor %}
+    </ul>
+    <form>
+        <button type='submit' formaction="/users/{{ user_in_template.id }}/posts/new" formmethod="get" class="btn btn-primary">Add Post</button>
+    </form>
 {% endblock %}

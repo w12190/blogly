@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} Post Details {% endblock %}
+
+{% block content %}
+    <h1>{{ post_in_template.title }}</h1>
+
+    <p>{{ post_in_template.content }}</p>
+
+    <p>{{ user_in_template.first_name }} {{ user_in_template.last_name }}</p>
+
+    <form>
+        <button formaction="/users/{{ user_in_template.id }}" formmethod="get" class="btn btn-primary">Cancel</button> 
+        <button formaction="/posts/{{ post_in_template.id }}/edit" formmethod="get" class="btn btn-primary">Edit</button>
+        <button formaction="/posts/{{ post_in_template.id }}/delete" formmethod="post" class="btn btn-primary">Delete</button>
+    </form>
+
+{% endblock %}

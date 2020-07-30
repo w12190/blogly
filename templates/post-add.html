@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Add New Post{% endblock %}
+
+{% block content %}
+   <h1>Add Post for {{ user_in_template.first_name }} {{ user_in_template.last_name }}</h1>
+
+   <form>
+        <label for="title">Title</label><br>
+        <input type="text" id='title' name='post_title'><br><br>
+
+        <label for="content">Content</label><br>
+        <input type="text" id="content" name="post_content"><br><br>
+
+        <button formaction="/users/{{ user_in_template.id }}" class="btn btn-outline-info">Cancel</button>
+        <button formaction="/users/{{ user_in_template.id }}/posts/new" formmethod="POST" class="btn btn-success">Add</button>
+    </form>
+
+{% endblock %}
