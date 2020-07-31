@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Tag Details {% endblock %}
+
+{% block content %}
+    <h1>{{tag.name}}</h1>
+    <ul>
+        {% for post in tagged_posts %} 
+            <!-- <li><a href="">{{ post.name }}</a></li> -->
+        {% endfor %}
+    </ul>
+
+    <!-- Edit Button -->
+    <a href="/tags/{{tag.id}}/edit" class="btn btn-primary" 
+    style="display: inline-block;">Edit</a>
+
+    <!-- Delete Button -->
+    <form action="/tags/{{tag.id}}/delete" method="POST" style="display: inline-block;">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+
+{% endblock %}

@@ -52,6 +52,8 @@ class Post(db.Model):
                         db.ForeignKey("users.id"),
                         nullable = False)
 
+    tags = db.relationship('Tag', secondary = 'posts_tags', backref='posts')
+
     def __repr__(self):
         """Show info about the post."""
         return f"<Post {self.id} {self.title} {self.content} {self.created_at} {self.user_id}>"
@@ -64,8 +66,12 @@ class Tag(db.Model):
     id = db.Column(db.Integer,
                     primary_key = True,
                     autoincrement = True)
-    name = db.Colum(db.String,
+    name = db.Column(db.String,
                     nullable = False)
+    
+    def __repr__(self):
+        """Show info about the post."""
+        return f"<Tag {self.id} {self.name}>"
 
 class PostTag(db.Model):
     """Model for post-tag records in Blogly."""
@@ -73,8 +79,12 @@ class PostTag(db.Model):
     __tablename__ = 'posts_tags'
 
     post_id = db.Column(db.Integer,
-                    primary_key = True,
-                    db.ForeignKey("posts.id"))
+                    db.ForeignKey("posts.id"),
+                    primary_key = True)
     tag_id = db.Column(db.Integer,
-                    primary_key = True,
-                    db.ForeignKey("users.id"))
+                    db.ForeignKey("tags.id"),
+                    primary_key = True)
+
+    def __repr__(self):
+        """Show info about the post."""
+        return f"<PostTag {self.post_id} {self.tag_id}>"
